@@ -1,20 +1,32 @@
-import React from "react";
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import HomePage from './pages/Homepage';
+import SignIn from './pages/Signin';
+import Signup from './pages/Signup';
+import AdminDashboard from './pages/AdminDashboard';
+import MemberDashboard from './pages/MemberDashboard';
+import ProtectedRoute from './ProtectedRoute';
 
-function App() {
+const App = () => {
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col">
-      <header className="bg-blue-600 text-white p-4">
-        <h1 className="text-2xl font-bold">Gym Management System</h1>
-      </header>
-      <main className="flex-1 p-4">
-        <h2 className="text-xl font-semibold">Welcome to the Gym!</h2>
-        <p className="mt-2">Manage your members, staff, and schedules easily.</p>
-      </main>
-      <footer className="bg-gray-800 text-white p-4 text-center">
-        © 2025 Gym Management System
-      </footer>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signup" element={<Signup />} />
+        
+        {/* Protected Routes for Admin */}
+        <Route element={<ProtectedRoute allowedRoles={["Admin"]} />}>
+          <Route path="admin-dashboard" element={<AdminDashboard />} />
+        </Route>
+
+        {/* Protected Routes for Member */}
+        <Route element={<ProtectedRoute allowedRoles={["Member"]} />}>
+          <Route path="member-dashboard" element={<MemberDashboard />} />
+        </Route> 
+      </Routes>
+    </BrowserRouter>
   );
-}
+};
 
 export default App;
