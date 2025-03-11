@@ -1,32 +1,59 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import HomePage from './pages/Homepage';
-import SignIn from './pages/Signin';
-import Signup from './pages/Signup';
-import AdminDashboard from './pages/AdminDashboard';
-import MemberDashboard from './pages/MemberDashboard';
-import ProtectedRoute from './ProtectedRoute';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from './components/common/Navbar';
+import Footer from './components/common/Footer';
+import Home from './pages/Home';
+import Membership from './pages/Membership';
+import MembershipDetails from './pages/MembershipDetails';
+import About from './pages/About';
+import Contact from './pages/Contact';
+import Login from './pages/Login';
+import Register from './pages/Register';
+// import Checkout from './pages/Checkout';
+// import Dashboard from './pages/Dashboard';
+// import Profile from './pages/Profile';
+// import Settings from './pages/Settings';
+// import NotFound from './pages/NotFound';
+// import ForgotPassword from './pages/ForgotPassword';
+import { AuthProvider } from './context/AuthContext';
+// import './assets/styles/main.css';
 
-const App = () => {
+// Private route component
+import ProtectedRoute from './components/auth/ProtectedRoute';
+
+function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/signup" element={<Signup />} />
-        
-        {/* Protected Routes for Admin */}
-        <Route element={<ProtectedRoute allowedRoles={["Admin"]} />}>
-          <Route path="admin-dashboard" element={<AdminDashboard />} />
-        </Route>
-
-        {/* Protected Routes for Member */}
-        <Route element={<ProtectedRoute allowedRoles={["Member"]} />}>
-          <Route path="member-dashboard" element={<MemberDashboard />} />
-        </Route> 
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <Router>
+        <Navbar />
+        <main className="min-h-screen pt-16">
+          <Routes>
+            {/* Public routes */}
+            <Route path="/" element={<Home />} />
+            <Route path="/membership" element={<Membership />} />
+            <Route path="/membership-details/:id" element={<MembershipDetails />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            {/* <Route path="/forgot-password" element={<ForgotPassword />} /> */}
+            
+            {/* Protected routes */}
+            <Route element={<ProtectedRoute />}>
+              {/* <Route path="/checkout" element={<Checkout />} /> */}
+              {/* <Route path="/dashboard" element={<Dashboard />} /> */}
+              {/* <Route path="/profile" element={<Profile />} /> */}
+              {/* <Route path="/settings" element={<Settings />} /> */}
+            </Route>
+            
+            {/* Fallback route */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </main>
+        <Footer />
+      </Router>
+    </AuthProvider>
   );
-};
+}
 
 export default App;

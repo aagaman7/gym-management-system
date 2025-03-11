@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import Navbar from "./Navbar";
+// import Navbar from "./Navbar";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; // Import the CSS
 
 const Signin = () => {
   const [email, setEmail] = useState("");
@@ -19,6 +21,9 @@ const Signin = () => {
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("role", res.data.role);
 
+      // Notify user about successful login
+      toast.success("Login successful!");
+
       // Redirect based on role
       if (res.data.role === "Admin") {
         navigate("/admin-dashboard");
@@ -26,13 +31,16 @@ const Signin = () => {
         navigate("/member-dashboard");
       }
     } catch (error) {
-      setError(error.response?.data?.message || "Something went wrong.");
+      // Display error notification
+      const errorMessage = error.response?.data?.message || "Something went wrong.";
+      setError(errorMessage);
+      toast.error(errorMessage);
     }
   };
 
   return (
     <div className="absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center">
-      <Navbar/>
+      {/* <Navbar /> */}
       <div className="bg-black bg-opacity-80 p-8 rounded-xl w-full max-w-md border border-lime-500">
         <h2 className="text-4xl font-bold text-center text-white mb-6">Sign In</h2>
 

@@ -1,15 +1,9 @@
 const express = require("express");
-const { registerUser, loginUser, getUserProfile } = require("../controllers/authController"); // Import controller functions
-const authenticateToken = require("../middleware/authMiddleware"); // Middleware for token verification
+const { register, login } = require("../controllers/authController");
+
 const router = express.Router();
 
-// **Register Route**
-router.post("/register", registerUser);
-
-// **Login Route**
-router.post("/login", loginUser);
-
-// **Protected Route (Example Profile)**
-router.get("/profile", authenticateToken, getUserProfile);
+router.post("/register", register);
+router.post("/login", login);
 
 module.exports = router;
