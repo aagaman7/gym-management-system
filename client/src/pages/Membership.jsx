@@ -1,3 +1,4 @@
+//Membership.jsx
 import React, { useState } from 'react';
 import PricingCard from '../components/membership/PricingCard';
 import CustomPackage from '../components/membership/CustomPackage';
@@ -50,7 +51,7 @@ const packages = [
     ],
     popular: false,
     color: 'indigo',
-  }
+  },
 ];
 
 const Membership = () => {

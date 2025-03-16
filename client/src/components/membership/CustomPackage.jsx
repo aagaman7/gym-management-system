@@ -1,3 +1,4 @@
+//CustomPackage.jsx
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -134,7 +135,7 @@ const CustomPackage = () => {
               
               <div className="mt-6">
                 <Link
-                  to="/register"
+                  to={`/membership-details/${id}`}
                   className="block w-full px-4 py-3 text-center rounded-md shadow bg-blue-600 hover:bg-blue-700 text-white font-medium"
                 >
                   Continue with Custom Package

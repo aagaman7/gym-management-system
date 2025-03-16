@@ -38,6 +38,7 @@ const Navbar = () => {
           <div className="hidden md:flex items-center space-x-8">
             <Link to="/" className={`font-medium ${isActive('/')}`}>Home</Link>
             <Link to="/membership" className={`font-medium ${isActive('/membership')}`}>Membership</Link>
+            <Link to="/schedule" className={`font-medium ${isActive('/Schedule')}`}>Schedule</Link>
             <Link to="/about" className={`font-medium ${isActive('/about')}`}>About Us</Link>
             <Link to="/contact" className={`font-medium ${isActive('/contact')}`}>Contact</Link>
             

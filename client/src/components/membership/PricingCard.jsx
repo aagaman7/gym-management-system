@@ -1,7 +1,10 @@
+//pricing card
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const PricingCard = ({ pkg }) => {
+
+  const navigate= useNavigate();
   const colorClasses = {
     gray: {
       bg: 'bg-gray-100',
@@ -50,13 +53,10 @@ const PricingCard = ({ pkg }) => {
             </li>
           ))}
         </ul>
-        <div className="mt-8">
-          <Link
-            to="/register"
-            className={`block w-full px-4 py-3 text-center rounded-md shadow ${colors.button} text-white font-medium`}
-          >
+        <div  onClick={() => navigate(`/package/${pkg.name.toLowerCase()}`)} className={`block w-full px-4 py-3 text-center rounded-md shadow ${colors.button} text-white font-medium mt-8`}>
+          
             Choose {pkg.name}
-          </Link>
+         
         </div>
       </div>
     </div>
