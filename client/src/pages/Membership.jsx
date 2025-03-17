@@ -1,4 +1,3 @@
-//Membership.jsx
 import React, { useState } from 'react';
 import PricingCard from '../components/membership/PricingCard';
 import CustomPackage from '../components/membership/CustomPackage';
@@ -120,26 +119,77 @@ const Membership = () => {
             <h2 className="text-3xl font-extrabold text-gray-900">Frequently Asked Questions</h2>
             <p className="mt-4 text-lg text-gray-500">Have questions about our memberships? Find answers to common questions below.</p>
           </div>
-          <div className="mt-12 space-y-8">
-            <div>
-              <h3 className="text-xl font-medium text-gray-900">Can I cancel my membership at any time?</h3>
-              <p className="mt-2 text-base text-gray-500">Yes, all our memberships can be canceled with a 30-day notice. There are no long-term contracts or cancellation fees.</p>
+          <div className="mt-12 space-y-6 divide-y divide-gray-200">
+            <div className="pt-6">
+              <div className="text-lg">
+                <h3 className="font-medium text-gray-900">How long are membership contracts?</h3>
+              </div>
+              <div className="mt-2 text-base text-gray-500">
+                <p>Our standard memberships are month-to-month with no long-term commitment. We also offer discounted rates for 6-month and annual commitments.</p>
+              </div>
             </div>
-            <div>
-              <h3 className="text-xl font-medium text-gray-900">Are there any joining fees?</h3>
-              <p className="mt-2 text-base text-gray-500">No, we don't charge any joining fees or hidden costs. The price you see is the price you pay.</p>
+
+            <div className="pt-6">
+              <div className="text-lg">
+                <h3 className="font-medium text-gray-900">Can I freeze my membership temporarily?</h3>
+              </div>
+              <div className="mt-2 text-base text-gray-500">
+                <p>Yes, members can freeze their membership for up to 3 months per year due to medical reasons, travel, or other circumstances. A small administrative fee may apply.</p>
+              </div>
             </div>
-            <div>
-              <h3 className="text-xl font-medium text-gray-900">Can I freeze my membership?</h3>
-              <p className="mt-2 text-base text-gray-500">Yes, you can freeze your membership for up to 3 months per year for medical reasons or extended travel.</p>
+
+            <div className="pt-6">
+              <div className="text-lg">
+                <h3 className="font-medium text-gray-900">Is there a joining fee?</h3>
+              </div>
+              <div className="mt-2 text-base text-gray-500">
+                <p>There is a one-time initiation fee of $49 for new members. We frequently run promotions where this fee is reduced or waived completely.</p>
+              </div>
             </div>
-            <div>
-              <h3 className="text-xl font-medium text-gray-900">Do you offer family discounts?</h3>
-              <p className="mt-2 text-base text-gray-500">Yes, we offer a 10% discount for each additional family member who joins with you.</p>
+
+            <div className="pt-6">
+              <div className="text-lg">
+                <h3 className="font-medium text-gray-900">Do you offer family discounts?</h3>
+              </div>
+              <div className="mt-2 text-base text-gray-500">
+                <p>Yes, we offer a 10% discount on additional memberships for immediate family members living in the same household.</p>
+              </div>
             </div>
-            <div>
-              <h3 className="text-xl font-medium text-gray-900">Can I try before I buy?</h3>
-              <p className="mt-2 text-base text-gray-500">Absolutely! We offer a free 1-day pass for new members to try our facilities before committing.</p>
+
+            <div className="pt-6">
+              <div className="text-lg">
+                <h3 className="font-medium text-gray-900">Can I transfer my membership to someone else?</h3>
+              </div>
+              <div className="mt-2 text-base text-gray-500">
+                <p>Membership transfers are considered on a case-by-case basis and may require an administrative fee. Please contact our membership services for more information.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-blue-700">
+        <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between">
+          <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+            <span className="block">Ready to start your fitness journey?</span>
+            <span className="block text-blue-300">Join today and get your first month at 50% off.</span>
+          </h2>
+          <div className="mt-8 flex lg:mt-0 lg:flex-shrink-0">
+            <div className="inline-flex rounded-md shadow">
+              <a
+                href="#"
+                className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-white hover:bg-blue-50"
+              >
+                Sign Up Now
+              </a>
+            </div>
+            <div className="ml-3 inline-flex rounded-md shadow">
+              <a
+                href="#"
+                className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-800 hover:bg-blue-900"
+              >
+                Contact Us
+              </a>
             </div>
           </div>
         </div>

@@ -1,14 +1,22 @@
-//packagedetails
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { CalendarDays, CreditCard, ChevronLeft, CheckCircle } from 'lucide-react';
 
 const PackageDetailsPage = () => {
   const { packageType } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const [selectedTime, setSelectedTime] = useState('');
   const [paymentOption, setPaymentOption] = useState('1month');
   const [loading, setLoading] = useState(false);
+  const [customPackageData, setCustomPackageData] = useState(null);
+  
+  useEffect(() => {
+    // Check if we have custom package data in location state
+    if (location.state && location.state.customPackage) {
+      setCustomPackageData(location.state.customPackage);
+    }
+  }, [location]);
   
   // Package details based on selection
   const packageDetails = {
@@ -77,6 +85,22 @@ const PackageDetailsPage = () => {
     }
   };
 
+  // Set up custom package information if available
+  useEffect(() => {
+    if (packageType === 'custom' && customPackageData) {
+      packageDetails.custom = {
+        ...packageDetails.custom,
+        name: customPackageData.name,
+        features: customPackageData.features,
+        price: {
+          '1month': customPackageData.price,
+          '3month': customPackageData.price * 2.7, // 10% discount
+          '1year': customPackageData.price * 10.2  // 15% discount
+        }
+      };
+    }
+  }, [customPackageData, packageType]);
+
   const timeSlots = [
     '6:00 AM - 8:00 AM',
     '8:00 AM - 10:00 AM',
@@ -125,7 +149,7 @@ const PackageDetailsPage = () => {
       <div className="max-w-4xl mx-auto">
         <button 
           className="flex items-center text-gray-600 mb-6 hover:text-gray-900"
-          onClick={() => navigate(-1)}
+          onClick={() => navigate('/membership')}
         >
           <ChevronLeft size={20} />
           <span>Back to Memberships</span>

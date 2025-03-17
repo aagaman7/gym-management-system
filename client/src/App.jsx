@@ -16,6 +16,7 @@ import BookingConfirmationPage from './components/membership/BookingConfirmation
 import PackageDetailsPage from './components/membership/PackageDetailsPage';
 
 
+
 function App() {
   return (
     <AuthProvider>
@@ -26,15 +27,16 @@ function App() {
             {/* Public routes */}
             <Route path="/" element={<Home />} />
             <Route path="/membership" element={<Membership />} />
-         
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/schedule" element={<TrainerBookingPage/>}/>
             <Route path="/booking-confirmation" element={<BookingConfirmationPage/>}/>
-            <Route path="/pdp" element={<PackageDetailsPage/>}/>
 
+           
+            {/* Updated route for package details */}
+            <Route path="/package/:packageType" element={<PackageDetailsPage/>}/>
             {/* Protected Route */}
             <Route element={<ProtectedRoute />}>
             </Route>

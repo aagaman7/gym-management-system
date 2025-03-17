@@ -1,6 +1,5 @@
-//CustomPackage.jsx
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const services = [
   { id: 'gym_access', name: 'Gym Access', basePrice: 19.99 },
@@ -15,11 +14,12 @@ const services = [
 ];
 
 const CustomPackage = () => {
+  const navigate = useNavigate();
   const [selectedServices, setSelectedServices] = useState({
     gym_access: { selected: true, quantity: 1 }
   });
   const [totalPrice, setTotalPrice] = useState(0);
-
+  
   useEffect(() => {
     calculateTotal();
   }, [selectedServices]);
@@ -59,6 +59,35 @@ const CustomPackage = () => {
     });
     
     setTotalPrice(total);
+  };
+
+  const handleContinueWithCustom = () => {
+    if (Object.keys(selectedServices).length === 0) {
+      alert('Please select at least one service');
+      return;
+    }
+    
+    // Create a list of selected services with quantities for the package details page
+    const selectedFeatures = Object.keys(selectedServices).map(serviceId => {
+      const service = services.find(s => s.id === serviceId);
+      const { quantity } = selectedServices[serviceId];
+      
+      return service.options 
+        ? `${service.name} (${quantity} ${quantity === 1 ? 'session' : 'sessions'})`
+        : service.name;
+    });
+    
+    // Navigate to package details page with custom package info
+    navigate('/package/custom', {
+      state: {
+        customPackage: {
+          name: 'Custom Membership',
+          price: totalPrice,
+          features: selectedFeatures,
+          selectedServices: selectedServices
+        }
+      }
+    });
   };
 
   return (
@@ -134,12 +163,12 @@ const CustomPackage = () => {
               </div>
               
               <div className="mt-6">
-                <Link
-                  to={`/membership-details/${id}`}
+                <button
+                  onClick={handleContinueWithCustom}
                   className="block w-full px-4 py-3 text-center rounded-md shadow bg-blue-600 hover:bg-blue-700 text-white font-medium"
                 >
                   Continue with Custom Package
-                </Link>
+                </button>
               </div>
             </>
           )}

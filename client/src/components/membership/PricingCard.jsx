@@ -1,10 +1,9 @@
-//pricing card
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const PricingCard = ({ pkg }) => {
-
-  const navigate= useNavigate();
+  const navigate = useNavigate();
+  
   const colorClasses = {
     gray: {
       bg: 'bg-gray-100',
@@ -27,6 +26,22 @@ const PricingCard = ({ pkg }) => {
   };
 
   const colors = colorClasses[pkg.color];
+  
+  // Map package name to route parameter
+  const getPackageType = (name) => {
+    const packageMap = {
+      'Basic': 'basic',
+      'Premium': 'premium',
+      'Elite': 'elite',
+      'Custom': 'custom'
+    };
+    return packageMap[name] || name.toLowerCase();
+  };
+
+  const handlePackageSelect = () => {
+    const packageType = getPackageType(pkg.name);
+    navigate(`/package/${packageType}`);
+  };
 
   return (
     <div className={`rounded-lg shadow-lg ${pkg.popular ? 'ring-2 ring-blue-500' : ''}`}>
@@ -53,11 +68,12 @@ const PricingCard = ({ pkg }) => {
             </li>
           ))}
         </ul>
-        <div  onClick={() => navigate(`/package/${pkg.name.toLowerCase()}`)} className={`block w-full px-4 py-3 text-center rounded-md shadow ${colors.button} text-white font-medium mt-8`}>
-          
-            Choose {pkg.name}
-         
-        </div>
+        <button
+          onClick={handlePackageSelect}
+          className={`block w-full px-4 py-3 text-center rounded-md shadow ${colors.button} text-white font-medium mt-8`}
+        >
+          Choose {pkg.name}
+        </button>
       </div>
     </div>
   );
