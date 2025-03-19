@@ -5,10 +5,10 @@ const { createPaymentIntent, createBooking, getUserBookings, getBooking, getBook
 const authMiddleware = require("../middleware/authMiddleware");
 const { adminMiddleware } = require("../middleware/roleMiddleware");
 
-// Stripe webhook - needs raw body, so must be before express.json() middleware
-router.post("/webhook", express.raw({ type: 'application/json' }), handleStripeWebhook);
+// Placeholder for future payment webhook
+router.post("/webhook", handleStripeWebhook);
 
-// Payment intent creation
+// Payment intent placeholder (for future implementation)
 router.post("/payment-intent", authMiddleware, createPaymentIntent);
 
 // Booking routes

@@ -1,4 +1,4 @@
-// models/UserModel.js (updated)
+// models/UserModel.js
 const mongoose = require("mongoose");
 
 const UserSchema = new mongoose.Schema({
@@ -6,9 +6,9 @@ const UserSchema = new mongoose.Schema({
   email: { type: String, unique: true, required: true },
   password: { type: String, required: true },
   role: { type: String, enum: ["Admin", "Member"], default: "Member" },
-  // New fields
+  // Membership fields
   currentMembership: { type: mongoose.Schema.Types.ObjectId, ref: 'Booking' },
-  stripeCustomerId: { type: String }, // For Stripe customer management
+  stripeCustomerId: { type: String }, // Reserved for future payment integration
   membershipHistory: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Booking' }]
 }, { timestamps: true });
 

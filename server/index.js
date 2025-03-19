@@ -10,9 +10,6 @@ const bookingRoutes = require("./routes/bookingRoutes");
 
 const app = express();
 
-// For Stripe webhook - needs raw body
-app.use('/api/bookings/webhook', express.raw({ type: 'application/json' }));
-
 // Regular middleware
 app.use(express.json());
 app.use(cors());

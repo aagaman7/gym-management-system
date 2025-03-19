@@ -9,7 +9,7 @@ const BookingSchema = new mongoose.Schema({
   paymentOption: { type: String, required: true }, // 1month, 3month, 1year
   amount: { type: Number, required: true },
   paymentStatus: { type: String, enum: ['pending', 'paid', 'failed'], default: 'pending' },
-  paymentIntentId: { type: String }, // Stripe payment intent ID
+  paymentIntentId: { type: String }, // Reserved for future payment integration
   bookingReference: { type: String, required: true, unique: true }, // GYM-XXXX format
   startDate: { type: Date, default: Date.now },
   endDate: { type: Date, required: true },
