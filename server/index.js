@@ -1,35 +1,41 @@
-// index.js
-require("dotenv").config();
+// Add this to routes/bookingRoutes.js
+
+// Add this route after the existing booking routes
+router.post("/:id/request-cancellation", authMiddleware, bookingController.requestCancellation);
+
+// The complete updated file would look like:
+// routes/bookingRoutes.js
 const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
-const authRoutes = require("./routes/authRoutes");
-const membershipRoutes = require("./routes/membershipRoutes");
-const customPackageRoutes = require("./routes/customPackageRoutes");
-const bookingRoutes = require("./routes/bookingRoutes");
+const router = express.Router();
+const { 
+  createPaymentIntent, 
+  createBooking, 
+  getUserBookings, 
+  getBooking, 
+  getBookingByReference, 
+  getAllBookings, 
+  cancelBooking, 
+  handleStripeWebhook,
+  requestCancellation 
+} = require("../controllers/bookingController");
+const authMiddleware = require("../middleware/authMiddleware");
+const { adminMiddleware } = require("../middleware/roleMiddleware");
 
-const app = express();
+// Placeholder for future payment webhook
+router.post("/webhook", handleStripeWebhook);
 
-// Regular middleware
-app.use(express.json());
-app.use(cors());
+// Payment intent placeholder (for future implementation)
+router.post("/payment-intent", authMiddleware, createPaymentIntent);
 
-// Connect to MongoDB Atlas
-const MONGO_URI = process.env.MONGO_URI;
-if (!MONGO_URI) {
-  console.error("MongoDB connection string is missing in .env file");
-  process.exit(1);
-}
+// Booking routes
+router.post("/", authMiddleware, createBooking);
+router.get("/", authMiddleware, getUserBookings);
+router.get("/:id", authMiddleware, getBooking);
+router.get("/reference/:reference", authMiddleware, getBookingByReference);
+router.delete("/:id", authMiddleware, cancelBooking);
+router.post("/:id/request-cancellation", authMiddleware, requestCancellation);
 
-mongoose.connect(MONGO_URI)
-  .then(() => console.log("Connected to MongoDB Atlas"))
-  .catch((err) => console.error("MongoDB connection error:", err));
+// Admin routes
+router.get("/admin/all", authMiddleware, adminMiddleware, getAllBookings);
 
-// Routes
-app.use("/api/auth", authRoutes);
-app.use("/api/memberships", membershipRoutes);
-app.use("/api/custom-packages", customPackageRoutes);
-app.use("/api/bookings", bookingRoutes);
-
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+module.exports = router;
