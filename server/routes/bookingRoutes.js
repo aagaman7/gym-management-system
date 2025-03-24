@@ -1,9 +1,4 @@
-// Add this to routes/bookingRoutes.js
 
-// Add this route after the existing booking routes
-router.post("/:id/request-cancellation", authMiddleware, bookingController.requestCancellation);
-
-// The complete updated file would look like:
 // routes/bookingRoutes.js
 const express = require("express");
 const router = express.Router();
@@ -14,15 +9,13 @@ const {
   getBooking, 
   getBookingByReference, 
   getAllBookings, 
-  cancelBooking, 
-  handleStripeWebhook,
-  requestCancellation 
+  cancelBooking,
 } = require("../controllers/bookingController");
 const authMiddleware = require("../middleware/authMiddleware");
 const { adminMiddleware } = require("../middleware/roleMiddleware");
 
 // Placeholder for future payment webhook
-router.post("/webhook", handleStripeWebhook);
+// router.post("/webhook", handleStripeWebhook);
 
 // Payment intent placeholder (for future implementation)
 router.post("/payment-intent", authMiddleware, createPaymentIntent);
@@ -33,7 +26,7 @@ router.get("/", authMiddleware, getUserBookings);
 router.get("/:id", authMiddleware, getBooking);
 router.get("/reference/:reference", authMiddleware, getBookingByReference);
 router.delete("/:id", authMiddleware, cancelBooking);
-router.post("/:id/request-cancellation", authMiddleware, requestCancellation);
+// router.post("/:id/request-cancellation", authMiddleware, requestCancellation);
 
 // Admin routes
 router.get("/admin/all", authMiddleware, adminMiddleware, getAllBookings);

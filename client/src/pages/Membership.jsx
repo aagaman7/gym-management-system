@@ -1,60 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import PricingCard from '../components/membership/PricingCard';
 import CustomPackage from '../components/membership/CustomPackage';
 
-const packages = [
-  {
-    id: 1,
-    name: 'Basic',
-    price: 29.99,
-    period: 'month',
-    features: [
-      'Access to gym equipment',
-      'Locker room access',
-      'Standard operating hours',
-      'Fitness assessment',
-      'Online workout tracking',
-    ],
-    popular: false,
-    color: 'gray',
-  },
-  {
-    id: 2,
-    name: 'Premium',
-    price: 49.99,
-    period: 'month',
-    features: [
-      'All Basic features',
-      'Group fitness classes',
-      'Extended hours access',
-      'One personal training session/month',
-      'Nutritional consultation',
-      'Access to swimming pool',
-    ],
-    popular: true,
-    color: 'blue',
-  },
-  {
-    id: 3,
-    name: 'Elite',
-    price: 79.99,
-    period: 'month',
-    features: [
-      'All Premium features',
-      'Unlimited personal training',
-      '24/7 gym access',
-      'Priority class booking',
-      'Complimentary towel service',
-      'Guest passes (2/month)',
-      'Access to all locations',
-    ],
-    popular: false,
-    color: 'indigo',
-  },
-];
-
 const Membership = () => {
+  const [packages, setPackages] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [showCustomPackage, setShowCustomPackage] = useState(false);
+
+  useEffect(() => {
+    const fetchMemberships = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get('http://localhost:5000/api/memberships');
+        
+        // Transform the data to match the component's expected format
+        const formattedPackages = response.data.map((membership, index) => ({
+          id: membership._id,
+          name: membership.name,
+          price: membership.price.monthly,
+          period: 'month',
+          features: membership.features,
+          popular: index === 1, // Set the middle option as popular
+          color: getColorForPackage(index),
+        }));
+        
+        setPackages(formattedPackages);
+        setLoading(false);
+      } catch (err) {
+        console.error('Error fetching memberships:', err);
+        setError('Failed to load membership options. Please try again later.');
+        setLoading(false);
+      }
+    };
+
+    fetchMemberships();
+  }, []);
+
+  // Helper function to assign colors based on package index
+  const getColorForPackage = (index) => {
+    const colors = ['gray', 'blue', 'indigo'];
+    return colors[index % colors.length];
+  };
 
   return (
     <div>
@@ -88,11 +76,21 @@ const Membership = () => {
             </p>
           </div>
 
-          <div className="mt-12 grid gap-8 grid-cols-1 md:grid-cols-3">
-            {packages.map((pkg) => (
-              <PricingCard key={pkg.id} pkg={pkg} />
-            ))}
-          </div>
+          {loading ? (
+            <div className="mt-12 text-center">
+              <p className="text-xl text-gray-600">Loading membership options...</p>
+            </div>
+          ) : error ? (
+            <div className="mt-12 text-center">
+              <p className="text-xl text-red-600">{error}</p>
+            </div>
+          ) : (
+            <div className="mt-12 grid gap-8 grid-cols-1 md:grid-cols-3">
+              {packages.map((pkg) => (
+                <PricingCard key={pkg.id} pkg={pkg} />
+              ))}
+            </div>
+          )}
 
           <div className="mt-16 text-center">
             <h3 className="text-2xl font-bold text-gray-900">

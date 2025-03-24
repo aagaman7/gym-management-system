@@ -9,9 +9,10 @@ const { adminMiddleware } = require("../middleware/roleMiddleware");
 router.get("/", getAllMemberships);
 router.get("/:type", getMembershipByType);
 
+
 // Admin routes
-router.post("/", authMiddleware, adminMiddleware, createMembership);
-router.put("/:id", authMiddleware, adminMiddleware, updateMembership);
-router.delete("/:id", authMiddleware, adminMiddleware, deleteMembership);
+router.post("/createMembership", authMiddleware, adminMiddleware, createMembership);
+router.put("/updateMembership/:id", authMiddleware, adminMiddleware, updateMembership);
+router.delete("/deleteMembership/:id", authMiddleware, adminMiddleware, deleteMembership);
 
 module.exports = router;

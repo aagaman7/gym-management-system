@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const services = [
   { id: 'gym_access', name: 'Gym Access', basePrice: 19.99 },
